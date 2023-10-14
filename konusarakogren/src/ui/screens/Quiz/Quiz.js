@@ -10,13 +10,12 @@ import {
   View
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { colors } from '../../../theme/Colors';
-import TopMenu from '../../components/TopMenu';
-import routes from '../../../navigation/routes';
 import { useLocalization } from '../../../hooks/useLocalization';
-import { units } from '../../../theme/Units';
+import { colors } from '../../../theme/Colors';
 import Fonts from '../../../theme/Fonts';
-import { BookPreview, Play } from '../../../assets/svgs';
+import { units } from '../../../theme/Units';
+import TopMenu from '../../components/TopMenu';
+import QuizQuestions from './components/QuizQuestions';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 // import BookPreviewButton from './BookPreviewButton';
 
@@ -70,14 +69,11 @@ export default function Quiz({ navigation }) {
     return visibleBooks.map((book, index) => {
       return (
         <View key={index}>
-          {/* <Text style={styles.text}>
-            {book.bookName}
-          </Text> */}
           <View key={index} style={styles.contentContainer}>
             <View style={[
               styles.textContainer,
               {
-                gap: book.id == INITIAL_START_IDX ? -8 : 0
+                gap: book.id == INITIAL_START_IDX ? 4 : 0
               }
             ]}>
               <Text style={[
@@ -101,7 +97,10 @@ export default function Quiz({ navigation }) {
               {/* <TouchableOpacity style={styles.buttonContainer}>
               <BookPreview width="24" height="24" />
             </TouchableOpacity> */}
-              <TouchableOpacity style={styles.playButtonContainer}>
+              <TouchableOpacity
+                style={styles.playButtonContainer}
+                onPress={() => setSelectedQuiz(book.quizId)}
+              >
                 {/* <Play
                 width={units.height / 48}
                 height={units.height / 48}
@@ -185,18 +184,25 @@ export default function Quiz({ navigation }) {
         <ScrollView
           style={styles.scrollViewContainer}
           showsVerticalScrollIndicator={false}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>
-              Genel İngilizce / 21.30 / 10 Dk
-            </Text>
-          </View>
-          <View style={styles.quizContainer}>
-            <Text style={styles.title}>{strings.quiz.title}</Text>
-            <Text style={styles.quizHeaderText}>
-              {strings.quiz.description}
-            </Text>
-            {books ? <Content /> : null}
-          </View>
+          {selectedQuiz.length === 0 && (
+            <>
+              <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                  Genel İngilizce / 21.30 / 10 Dk
+                </Text>
+              </View>
+              <View style={styles.quizContainer}>
+                <Text style={styles.title}>{strings.quiz.title}</Text>
+                <Text style={styles.quizHeaderText}>
+                  {strings.quiz.description}
+                </Text>
+                {books ? <Content /> : null}
+              </View>
+            </>
+          )}
+          {selectedQuiz.length > 0 && (
+            <QuizQuestions quizId={selectedQuiz} />
+          )}
         </ScrollView>
       </View>
     </>
@@ -238,6 +244,7 @@ const styles = StyleSheet.create({
   quizContainer: {
     backgroundColor: colors.WHITE,
     borderRadius: units.height / 72,
+    paddingHorizontal: units.height / 72,
     borderWidth: units.height / 500,
     borderColor: colors.LT_GREY,
     marginBottom: units.height / 36
@@ -256,7 +263,6 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size(14),
     color: colors.BLACK,
     marginVertical: units.height / 45,
-    marginHorizontal: units.width / 25
   },
   textContainer: {
     display: 'flex',

@@ -1,12 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
-// import { Menu, BackButton } from '../../assets/svgs';
 import { colors } from '../../theme/Colors';
 import { units } from '../../theme/Units';
 import Fonts from '../../theme/Fonts';
 import { useLocalization } from '../../hooks/useLocalization';
 // import OfflineNotice from './OfflineNotice';
-import { BackButton, Menu } from '../../assets/svgs';
+// import { BackButton, Menu } from '../../assets/svgs';
 
 const TopMenu = ({
     onPressMenu,
