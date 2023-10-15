@@ -14,33 +14,52 @@ const AnswerButton = (props) => {
     // Kullancının cevap seçtiğinde gördüğü butonun koşuludur.
     let focusedButton = !isClickedControlButton && userAnswer === answer.id;
     // Kullanıcının cevap seçtikten sonra 'Kontrol Et' butonuna tıkladığında gördüğü doğru cevap butonun koşuludur.
-    let rightAnswerButton = isClickedControlButton && answer.id === currentQuestionData.rightAnswer;
+    let rightAnswerButton = isClickedControlButton && currentQuestionData.rightAnswer === answer.id;
     // Kullanıcının cevap seçtikten sonra 'Kontrol Et' butonuna tıkladığında gördüğü yanlış cevap butonun koşuludur.
     let wrongAnswerButton = quizReport && isClickedControlButton && answer.id === quizReport.userAnswer && quizReport.userAnswer !== currentQuestionData.rightAnswer;
 
-    console.log("normalButton: " + normalButton + " focusedButton: " + focusedButton + " rightAnswerButton: " + rightAnswerButton + " wrongAnswerButton: " + wrongAnswerButton)
     return (
         <TouchableOpacity
             onPress={onPress}
             style={[styles.answersContainer,
             {
-                backgroundColor: normalButton
-                    ? colors.WHITE
-                    : focusedButton
+                backgroundColor: focusedButton
+                    ? colors.LT_BLUE
+                    : rightAnswerButton
+                        ? colors.QUIZ_GREEN
+                        : wrongAnswerButton
+                            ? colors.MD_RED
+                            : colors.WHITE,
+            }
+            ]}>
+            <View style={styles.answer}>
+                <View style={[styles.answerIcon, {
+                    backgroundColor: focusedButton
                         ? colors.LT_BLUE
                         : rightAnswerButton
                             ? colors.QUIZ_GREEN
                             : wrongAnswerButton
                                 ? colors.MD_RED
                                 : colors.WHITE,
-            }
-            ]}
-        >
-            <View style={styles.answer}>
-                <View style={styles.answerIcon}>
-                    <Text style={styles.answerChoice}>{getAnswerTitleByIndex(index)}</Text>
+                    borderColor: (rightAnswerButton || wrongAnswerButton)
+                        ? colors.WHITE
+                        : colors.MD_GREY
+                }]}>
+                    <Text
+                        style={[styles.answerChoice, {
+                            color: (rightAnswerButton || wrongAnswerButton)
+                                ? colors.WHITE
+                                : colors.BLACK
+                        }]}
+                    >
+                        {getAnswerTitleByIndex(index)}
+                    </Text>
                 </View>
-                <Text style={styles.answerText}>{answer.answer}</Text>
+                <Text style={[styles.answerText, {
+                    color: (rightAnswerButton || wrongAnswerButton)
+                        ? colors.WHITE
+                        : colors.BLACK
+                }]}> {answer.answer}</Text>
             </View>
             {/* {answer == 1 ? (
                 <Check

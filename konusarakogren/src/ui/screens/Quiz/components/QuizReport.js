@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Close, Completed } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
 import { colors } from '../../../../theme/Colors';
@@ -10,6 +10,7 @@ import { units } from '../../../../theme/Units';
 import { getFormattedTime } from '../../../../utils/utility';
 import AppButton from '../../../components/Button';
 import routes from '../../../../navigation/routes';
+import QuizReportQuestions from './QuizReportQuestions';
 
 const QuizReport = (props) => {
 
@@ -26,7 +27,7 @@ const QuizReport = (props) => {
 
     const handleNavigation = () => {
         // navigation.navigate(routes.QUIZ)
-        console.log("Ana Sayfa") 
+        console.log("Ana Sayfa")
     };
 
     // QuizReport değiştiğinde doğru, yanlış ve boş cevap sayılarını hesaplar
@@ -51,7 +52,7 @@ const QuizReport = (props) => {
     }, [quizReport]);
 
     return (
-        <>
+        <ScrollView>
             <View style={styles.headerContainer}>
                 <Completed width={30} height={30} />
                 <Text style={styles.headerText}>{strings.quiz.quiz_completed}</Text>
@@ -102,7 +103,23 @@ const QuizReport = (props) => {
                 }}
                 title={strings.quiz.solve_again}
             />
-        </>
+            <AppButton
+                title={strings.quiz.show_result}
+                buttonStyles={styles.button}
+                bgColor={colors.WHITE}
+                textColor="BLUE"
+                onPress={() => {
+                    setShowResult(showResult => true);
+                }}
+            />
+
+            {showResult && (
+                <QuizReportQuestions
+                    quizQuestions={quizQuestions}
+                    quizReport={quizReport}
+                />
+            )}
+        </ScrollView>
     );
 };
 
@@ -174,6 +191,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginTop: 4,
+    },
+    button: {
+        marginVertical: units.height / 40,
     },
 });
 

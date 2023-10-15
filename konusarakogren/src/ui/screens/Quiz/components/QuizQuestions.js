@@ -173,6 +173,7 @@ const QuizQuestions = (props) => {
         });
     }
 
+    //Butonun üzerinde "Boş Bırak", "Kontrol Et" ve "Devam Et" yazılarından uygun olanı seçmek için kullanılır.
     const buttonText = () => {
         if ((userAnswer === -1 && !isClickedControlButton)) return strings.quiz.leave_empty
         if ((quizReport.questions[currentQuestionIndex].userAnswer > 0 && !isClickedControlButton)) return strings.quiz.control
@@ -207,7 +208,7 @@ const QuizQuestions = (props) => {
     // Kullanıcının cevapladığı soruları rapor sayfasında göstermek için kullanılır.
     // Bu objeye göre rapor sayfasında soruların doğru yanlış cevaplarını gösteriyoruz.
     useEffect(() => {
-        if (userAnswer !== -1) {
+        if (userAnswer !== -1 && currentQuestionIndex < quizInformation.questions.length) {
             const updatedQuestions = [...quizReport.questions];
             updatedQuestions[currentQuestionIndex].userAnswer = userAnswer;
             setQuizReport((prevObject) => ({
@@ -217,6 +218,11 @@ const QuizQuestions = (props) => {
         }
 
     }, [userAnswer, currentQuestionIndex]);
+
+    // Her soru değiştiğinde kullanıcının verdiği cevap sıfırlanır.
+    useEffect(() => {
+        setUserAnswer(-1);
+    }, [currentQuestionIndex])
 
     // Süre dolduğunda rapor sayfasına yönlendirilir.
     useEffect(() => {
@@ -241,7 +247,7 @@ const QuizQuestions = (props) => {
                         pauseTimer={pauseTimer}
                     />
                     <View style={styles.quizContainer}>
-                        <TouchableOpacity style= {styles.closeContainer}>
+                        <TouchableOpacity style={styles.closeContainer}>
                             <Close width={24} height={24} />
                         </TouchableOpacity>
                         <Text style={styles.title}>{quizInformation.bookName}</Text>
@@ -277,7 +283,6 @@ const QuizQuestions = (props) => {
                             } else if (quizReport.questions[currentQuestionIndex].userAnswer > 0 && !isClickedControlButton) {
                                 setIsClickedControlButton(true);
                             }
-                            setUserAnswer(-1);
                         }}
                         title={buttonText()}
                     />

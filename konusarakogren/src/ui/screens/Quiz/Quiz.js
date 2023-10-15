@@ -135,7 +135,6 @@ export default function Quiz({ navigation }) {
   // Aşağı ok tıklanırsa çalışacak işlev
   const handleDownPress = () => {
     const maxStartIdx = Math.max(0, books.length - ITEMS_PER_PAGE);
-    console.log(maxStartIdx);
     if (startIdx < maxStartIdx) {
       setStartIdx(startIdx + ITEMS_PER_PAGE);
     }
