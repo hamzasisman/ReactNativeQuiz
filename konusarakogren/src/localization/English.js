@@ -1,13 +1,19 @@
 export const english = {
   app_name: 'Konuşarak Öğren',
+
+  //drawer
+  support_drawer: 'Support',
+  log_out_drawer: 'Log Out',
+  settings: 'Settings',
+  permissions: 'Permissions',
+  
   quiz: {
     top_title: "Quiz & Test",
     title: "All Tests",
     description: "You can find and solve the tests for your speech package below.",
-    answered_quiz: "Previously answered units are indicated with a <span class=\"material-symbols-outlined text-primary\">check</span> sign.",
+    answered_quiz: "Previously answered units are indicated with a #check# sign.",
     view_book: "View Book",
     show_report: "View Result",
-    start: "Start",
     remaining_time: "Time Remaining",
     control: "Check",
     continue: "Continue",

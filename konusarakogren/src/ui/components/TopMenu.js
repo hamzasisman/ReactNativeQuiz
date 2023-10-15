@@ -4,8 +4,7 @@ import { colors } from '../../theme/Colors';
 import { units } from '../../theme/Units';
 import Fonts from '../../theme/Fonts';
 import { useLocalization } from '../../hooks/useLocalization';
-// import OfflineNotice from './OfflineNotice';
-// import { BackButton, Menu } from '../../assets/svgs';
+import { BackButton, Menu } from '../../assets/svgs';
 
 const TopMenu = ({
     onPressMenu,
@@ -27,13 +26,13 @@ const TopMenu = ({
                         }}
                         style={styles.icon}
                         onPress={onPressBack}>
-                        {/* <BackButton width="100%" height="100%" /> */}
+                        <BackButton width="100%" height="100%" />
                     </TouchableOpacity>
                 )}
                 <Text
                     style={[
                         styles.title,
-                        // !onPressBack && { marginLeft: units.height / 20 }
+                        !onPressBack && { marginLeft: units.height / 20 }
                     ]}
                     allowFontScaling={false}>
                     {title ? title : strings.app_name}
@@ -48,10 +47,9 @@ const TopMenu = ({
                     style={styles.icon}
                     onPress={onPressMenu}
                     >
-                    {/* <Menu width="100%" height="100%" /> */}
+                    <Menu width="100%" height="100%" />
                 </TouchableOpacity>
             </View>
-            {/* <OfflineNotice /> */}
         </>
     );
 };

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Close } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
 import { colors } from '../../../../theme/Colors';
 import Fonts from '../../../../theme/Fonts';
 import { units } from '../../../../theme/Units';
 import { getFormattedTime } from '../../../../utils/utility';
+import AppButton from '../../../components/Button';
+import AnswerButton from './AnswerButton';
 import QuizReport from './QuizReport';
 import QuizTimer from './QuizTimer';
 
 const quizInformationStaticData = {
     quizId: "cf81ed71-e3e8-4706-b7a1-4a939f09f4ab",
     bookName: "Beginner / Level 2 / Unit 1",
-    duration: 1,
+    duration: 100,
     questions: [
         {
             id: 1,
@@ -169,6 +173,12 @@ const QuizQuestions = (props) => {
         });
     }
 
+    const buttonText = () => {
+        if ((userAnswer === -1 && !isClickedControlButton)) return strings.quiz.leave_empty
+        if ((quizReport.questions[currentQuestionIndex].userAnswer > 0 && !isClickedControlButton)) return strings.quiz.control
+        if ((quizReport.questions[currentQuestionIndex].userAnswer > 0 && isClickedControlButton)) return strings.quiz.continue
+    }
+
     // Kullanıcı soru değiştirdiğinde 'Kontrol Et' butonuna tıklanma durumunu sıfırlıyoruz.
     useEffect(() => {
         setIsClickedControlButton(isClickedControlButton => false);
@@ -230,7 +240,47 @@ const QuizQuestions = (props) => {
                         setIsTimerEnd={setIsTimerEnd}
                         pauseTimer={pauseTimer}
                     />
-                    <Text>{startTime}</Text>
+                    <View style={styles.quizContainer}>
+                        <TouchableOpacity style= {styles.closeContainer}>
+                            <Close width={24} height={24} />
+                        </TouchableOpacity>
+                        <Text style={styles.title}>{quizInformation.bookName}</Text>
+                        <Text style={styles.quizHeaderText}>
+                            {currentQuestionIndex + 1}) {quizInformation.questions[currentQuestionIndex].question}
+                        </Text>
+                        <View style={styles.answerContainer}>
+                            {quizInformation.questions[currentQuestionIndex].answers.map((answer, index) => (
+                                <AnswerButton
+                                    key={index}
+                                    index={index}
+                                    answer={answer}
+                                    userAnswer={userAnswer}
+                                    quizReport={Object.keys(quizReport).length > 0 && quizReport.questions[currentQuestionIndex]}
+                                    currentQuestionIndex={currentQuestionIndex}
+                                    currentQuestionData={quizInformation.questions[currentQuestionIndex]}
+                                    isClickedControlButton={isClickedControlButton}
+                                    onPress={() => {
+                                        if (!isClickedControlButton) {
+                                            setUserAnswer(userAnswer => answer.id);
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </View>
+                    </View>
+                    <AppButton
+                        onPress={() => {
+                            if (userAnswer === -1 || (quizReport.questions[currentQuestionIndex].userAnswer > 0 && isClickedControlButton)) {
+                                setCurrentQuestionIndex(currentQuestionIndex + 1)
+                                setIsClickedControlButton(isClickedControlButton => false);
+
+                            } else if (quizReport.questions[currentQuestionIndex].userAnswer > 0 && !isClickedControlButton) {
+                                setIsClickedControlButton(true);
+                            }
+                            setUserAnswer(-1);
+                        }}
+                        title={buttonText()}
+                    />
                 </>
             )}
         </>
@@ -238,7 +288,42 @@ const QuizQuestions = (props) => {
 };
 
 const styles = StyleSheet.create({
-
+    quizContainer: {
+        backgroundColor: colors.WHITE,
+        borderRadius: units.height / 72,
+        paddingHorizontal: units.height / 72,
+        borderWidth: units.height / 500,
+        borderColor: colors.LT_GREY,
+        marginBottom: units.height / 36,
+        width: units.width / 1.09,
+    },
+    title: {
+        fontFamily: Fonts.type.bold,
+        fontSize: Fonts.size(18),
+        color: colors.ORANGE,
+        textAlign: 'center',
+        marginHorizontal: units.width / 10,
+        marginTop: units.height / 72,
+        marginBottom: units.height / 30
+    },
+    quizHeaderText: {
+        marginBottom: units.height / 48,
+        marginHorizontal: units.width / 36,
+        fontSize: Fonts.size(14),
+        fontFamily: Fonts.type.bold,
+        color: colors.BLACK,
+        textAlign: 'center'
+    },
+    answerContainer: {
+        marginVertical: units.height / 40,
+        display: 'flex',
+    },
+    closeContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 4,
+    },
 });
 
 export default QuizQuestions;
