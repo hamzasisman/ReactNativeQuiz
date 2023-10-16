@@ -314,7 +314,6 @@ const styles = StyleSheet.create({
     quizHeaderText: {
         marginBottom: units.height / 48,
         marginHorizontal: units.width / 36,
-        fontSize: Fonts.size(14),
         fontFamily: Fonts.type.bold,
         color: colors.BLACK,
         textAlign: 'center'

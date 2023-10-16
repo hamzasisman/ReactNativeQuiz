@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Close, Completed } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
 import { colors } from '../../../../theme/Colors';
@@ -9,7 +8,6 @@ import Fonts from '../../../../theme/Fonts';
 import { units } from '../../../../theme/Units';
 import { getFormattedTime } from '../../../../utils/utility';
 import AppButton from '../../../components/Button';
-import routes from '../../../../navigation/routes';
 import QuizReportQuestions from './QuizReportQuestions';
 
 const QuizReport = (props) => {
@@ -52,7 +50,7 @@ const QuizReport = (props) => {
     }, [quizReport]);
 
     return (
-        <ScrollView>
+        <View>
             <View style={styles.headerContainer}>
                 <Completed width={30} height={30} />
                 <Text style={styles.headerText}>{strings.quiz.quiz_completed}</Text>
@@ -119,7 +117,7 @@ const QuizReport = (props) => {
                     quizReport={quizReport}
                 />
             )}
-        </ScrollView>
+        </View>
     );
 };
 

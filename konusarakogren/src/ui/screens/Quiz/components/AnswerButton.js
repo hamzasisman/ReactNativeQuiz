@@ -61,13 +61,6 @@ const AnswerButton = (props) => {
                         : colors.BLACK
                 }]}> {answer.answer}</Text>
             </View>
-            {/* {answer == 1 ? (
-                <Check
-                    style={styles.check}
-                    width={units.width / 25}
-                    height={units.width / 25}
-                />
-            ) : null} */}
         </TouchableOpacity>
     );
 };
