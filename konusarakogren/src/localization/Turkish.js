@@ -1,13 +1,19 @@
 export const turkish = {
   app_name: 'Konuşarak Öğren',
+
+  //drawer
+  support_drawer: 'Destek Merkezi',
+  log_out_drawer: 'Çıkış Yap',
+  settings: 'Ayarlar',
+  permissions: 'İzinler',
+
   quiz: {
     top_title: "Quiz & Test",
     title: "Tüm Testler",
     description: "Konuşma paketinize ait testleri aşağıda bulabilir ve çözebilirsiniz.",
-    answered_quiz: "Daha önce cevaplanan üniteler <span class=\"material-symbols-outlined text-primary\">check</span> işareti ile gösterilmektedir.",
+    answered_quiz: "Daha önce cevaplanan üniteler #check# işareti ile gösterilmektedir.",
     view_book: "Kitabı Görüntüle",
     show_report: "Sonucu Görüntüle",
-    start: "Başla",
     remaining_time: "Kalan Süre",
     control: "Kontrol Et",
     continue: "Devam Et",

@@ -16,6 +16,9 @@ export const colors = {
     LT_GREEN: '#AFDB73',
     CALL_GREEN: '#2F9E4B',
     WARNING: '#FFAD46',
-    RED: '#F25961'
+    RED: '#F25961',
+    QUIZ_GREEN: '#21D052',
+    MD_RED: '#F25961',
+    LT_BLUE: '#EBF6FF'
   };
   

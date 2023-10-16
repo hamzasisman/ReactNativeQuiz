@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  PixelRatio,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -10,15 +9,13 @@ import {
   View
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { colors } from '../../../theme/Colors';
-import TopMenu from '../../components/TopMenu';
-import routes from '../../../navigation/routes';
+import { BookPreview, Check, DownArrow, PlayWhite } from '../../../assets/svgs';
 import { useLocalization } from '../../../hooks/useLocalization';
-import { units } from '../../../theme/Units';
+import { colors } from '../../../theme/Colors';
 import Fonts from '../../../theme/Fonts';
-import { BookPreview, Play } from '../../../assets/svgs';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-// import BookPreviewButton from './BookPreviewButton';
+import { units } from '../../../theme/Units';
+import TopMenu from '../../components/TopMenu';
+import QuizQuestions from './components/QuizQuestions';
 
 const books = [
   { id: 1, quizId: "c4fa0441-aa17-4c63-b0ba-59f7921a7e53", bookName: "Beginner / Level 2 / Unit 1", bookLink: "https://books.clickivo.com/books.php?comp=1&book=_ClickIVO/L1/S2/191.jpg", isCompleted: false },
@@ -58,10 +55,14 @@ export default function Quiz({ navigation }) {
   const { language } = useSelector(state => state.locale);
   const strings = useLocalization();
 
+  const modifiedText = strings.quiz.answered_quiz.split('#check#').map((part, index) => (
+    index % 2 !== 0 ? <Check key={index} width={20} height={20} /> + part : part
+  ));
+
   const [selectedQuiz, setSelectedQuiz] = useState("");
   const [startIdx, setStartIdx] = useState(0);
 
-  const ITEMS_PER_PAGE = 7;
+  const ITEMS_PER_PAGE = 5;
   const INITIAL_START_IDX = 14;
 
   const visibleBooks = books.slice(startIdx, startIdx + ITEMS_PER_PAGE);
@@ -70,14 +71,11 @@ export default function Quiz({ navigation }) {
     return visibleBooks.map((book, index) => {
       return (
         <View key={index}>
-          {/* <Text style={styles.text}>
-            {book.bookName}
-          </Text> */}
           <View key={index} style={styles.contentContainer}>
             <View style={[
               styles.textContainer,
               {
-                gap: book.id == INITIAL_START_IDX ? -8 : 0
+                gap: book.id == INITIAL_START_IDX ? 4 : 0
               }
             ]}>
               <Text style={[
@@ -86,28 +84,31 @@ export default function Quiz({ navigation }) {
                   fontWeight: book.id == INITIAL_START_IDX ? 'bold' : 'normal'
                 }
               ]}>{book.bookName}</Text>
-              <View style={[styles.badgeContainer,
+              {/* <View style={[styles.badgeContainer,
               {
                 display: book.id == INITIAL_START_IDX ? 'flex' : 'none'
               }
               ]}>
                 <Text style={styles.badge}>{strings.quiz.last_lesson}</Text>
-              </View>
+              </View> */}
             </View>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text>X</Text>
+            <View style={styles.rightContainer}>
+              {book.isCompleted && (
+                <Check width="20" height="20" />
+              )}
+              <TouchableOpacity>
+                <BookPreview width="24" height="24" />
               </TouchableOpacity>
-              {/* <TouchableOpacity style={styles.buttonContainer}>
-              <BookPreview width="24" height="24" />
-            </TouchableOpacity> */}
-              <TouchableOpacity style={styles.playButtonContainer}>
-                {/* <Play
-                width={units.height / 48}
-                height={units.height / 48}
-                marginHorizontal={units.height / 110}
-              /> */}
-                <Text style={styles.playButtonText}>{strings.quiz.start}</Text>
+              <TouchableOpacity
+                style={styles.playButtonContainer}
+                onPress={() => setSelectedQuiz(book.quizId)}
+              >
+                <PlayWhite
+                  width={units.height / 48}
+                  height={units.height / 48}
+                  marginHorizontal={units.height / 110}
+                />
+                {/* <Text style={styles.playButtonText}>{strings.quiz.start}</Text> */}
               </TouchableOpacity>
             </View>
           </View>
@@ -122,6 +123,21 @@ export default function Quiz({ navigation }) {
         </View>
       );
     });
+  };
+
+  // Yukarı ok tıklanırsa çalışacak işlev
+  const handleUpPress = () => {
+    if (startIdx > 0) {
+      setStartIdx(startIdx - ITEMS_PER_PAGE);
+    }
+  };
+
+  // Aşağı ok tıklanırsa çalışacak işlev
+  const handleDownPress = () => {
+    const maxStartIdx = Math.max(0, books.length - ITEMS_PER_PAGE);
+    if (startIdx < maxStartIdx) {
+      setStartIdx(startIdx + ITEMS_PER_PAGE);
+    }
   };
 
   // Görüntülenen öğeleri hesaplar ve eksik öğeleri doldurur
@@ -185,18 +201,55 @@ export default function Quiz({ navigation }) {
         <ScrollView
           style={styles.scrollViewContainer}
           showsVerticalScrollIndicator={false}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>
-              Genel İngilizce / 21.30 / 10 Dk
-            </Text>
-          </View>
-          <View style={styles.quizContainer}>
-            <Text style={styles.title}>{strings.quiz.title}</Text>
-            <Text style={styles.quizHeaderText}>
-              {strings.quiz.description}
-            </Text>
-            {books ? <Content /> : null}
-          </View>
+          {selectedQuiz.length === 0 && (
+            <>
+              <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                  Genel İngilizce / 21.30 / 10 Dk
+                </Text>
+              </View>
+              <View style={styles.quizContainer}>
+                <Text style={styles.title}>{strings.quiz.title}</Text>
+                <Text style={styles.quizHeaderText}>
+                  {strings.quiz.description}
+                </Text>
+                {books ?
+                  <>
+                    <TouchableOpacity
+                      style={styles.arrowContainer}
+                      onPress={() => { !showUpButton && handleUpPress() }}
+                    >
+                      <DownArrow style={[styles.rotate,
+                      {
+                        opacity: showUpButton ? 0 : 100
+                      }]}
+                        width="18"
+                        height="18"
+                      />
+                    </TouchableOpacity>
+
+                    <Content />
+
+                    <TouchableOpacity
+                      style={styles.arrowContainer}
+                      onPress={() => { !showDownButton && handleDownPress() }}
+                    >
+                      <DownArrow style={{ opacity: showDownButton ? 0 : 100 }}
+                        width="18"
+                        height="18"
+                      />
+                    </TouchableOpacity>
+                  </>
+                  : null}
+              </View>
+              <Text style={styles.bottomMessage}>
+                {modifiedText}
+              </Text>
+            </>
+          )}
+          {selectedQuiz.length > 0 && (
+            <QuizQuestions quizId={selectedQuiz} />
+          )}
         </ScrollView>
       </View>
     </>
@@ -238,6 +291,7 @@ const styles = StyleSheet.create({
   quizContainer: {
     backgroundColor: colors.WHITE,
     borderRadius: units.height / 72,
+    paddingHorizontal: units.height / 72,
     borderWidth: units.height / 500,
     borderColor: colors.LT_GREY,
     marginBottom: units.height / 36
@@ -247,16 +301,14 @@ const styles = StyleSheet.create({
     marginHorizontal: units.width / 36,
     fontSize: Fonts.size(14),
     fontFamily: Fonts.type.bold,
-    fontWeight: 'bold',
     color: colors.BLACK,
     textAlign: 'center'
   },
   text: {
-    fontFamily: Fonts.type.regular,
+    fontFamily: Fonts.type.bold,
     fontSize: Fonts.size(14),
     color: colors.BLACK,
     marginVertical: units.height / 45,
-    marginHorizontal: units.width / 25
   },
   textContainer: {
     display: 'flex',
@@ -274,19 +326,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 4,
   },
-  buttonContainer: {
-    marginRight: units.width / 24,
+  rightContainer: {
+    marginRight: units.width / 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
   },
-  badgeContainer: {
-    backgroundColor: colors.ORANGE,
-    borderRadius: 10,
-    paddingVertical: units.height / 144,
-    paddingHorizontal: units.width / 60,
-  },
-  badge: {
-    fontSize: Fonts.size(12),
-    color: colors.WHITE,
-  },
+  // badgeContainer: {
+  //   backgroundColor: colors.ORANGE,
+  //   borderRadius: 10,
+  //   paddingVertical: units.height / 144,
+  //   paddingHorizontal: units.width / 60,
+  // },
+  // badge: {
+  //   fontSize: Fonts.size(12),
+  //   color: colors.WHITE,
+  // },
   playButtonContainer: {
     backgroundColor: colors.BLUE,
     borderRadius: 10,
@@ -296,18 +351,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: units.height / 144,
     paddingHorizontal: units.width / 60,
-    fontWeight: 'bold',
   },
-  playButtonText: {
-    fontFamily: Fonts.type.bold,
-    fontWeight: 'bold',
-    fontSize: PixelRatio.getFontScale() > 3 ? Fonts.size(7) : Fonts.size(12),
-    color: colors.WHITE
+  // playButtonText: {
+  //   fontFamily: Fonts.type.bold,
+  //   fontSize: PixelRatio.getFontScale() > 3 ? Fonts.size(7) : Fonts.size(12),
+  //   color: colors.WHITE
+  // },
+  arrowContainer: {
+    alignItems: 'center',
   },
-  buttonsContainer: {
-    display: 'flex',
+  rotate: {
+    transform: [{ rotate: '180deg' }]
+  },
+  bottomMessage: {
+    color: colors.TAB_GREY,
+    fontSize: Fonts.size(14),
+    fontFamily: Fonts.type.regular,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: -8,
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginTop: 2,
+    textAlign: 'center',
   }
 });
