@@ -25,6 +25,7 @@ import permission from './permission.svg';
 import support from './support.svg';
 import backDrawer from './back-draw.svg';
 import settings from './settings.svg';
+import closeImage from './close-image.svg';
 
 export const Menu = menu;
 export const BackButton = backButton;
@@ -53,3 +54,4 @@ export const Permission = permission;
 export const Support = support;
 export const BackDrawer = backDrawer;
 export const Settings = settings;
+export const CloseImage = closeImage;

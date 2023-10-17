@@ -6,6 +6,7 @@ export const turkish = {
   log_out_drawer: 'Çıkış Yap',
   settings: 'Ayarlar',
   permissions: 'İzinler',
+  info_message: 'Bilgi Mesajı',
 
   quiz: {
     top_title: "Quiz & Test",

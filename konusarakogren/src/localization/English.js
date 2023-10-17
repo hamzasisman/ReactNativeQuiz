@@ -6,6 +6,7 @@ export const english = {
   log_out_drawer: 'Log Out',
   settings: 'Settings',
   permissions: 'Permissions',
+  info_message: 'Information Message',
   
   quiz: {
     top_title: "Quiz & Test",

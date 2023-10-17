@@ -13,12 +13,12 @@ const QuizReportQuestions = ({ quizQuestions, quizReport }) => {
     return (
         <ScrollView style={styles.container}>
             {quizQuestions.map((item, questionIndex) => (
-                <View 
-                key={questionIndex}
-                style={[styles.questionContainer, 
-                {
-                    marginTop: questionIndex !== 0 ? 40: 0
-                }]}
+                <View
+                    key={questionIndex}
+                    style={[styles.questionContainer,
+                    {
+                        marginTop: questionIndex !== 0 ? 40 : 0
+                    }]}
                 >
                     <Text style={styles.quizHeaderText}>{questionIndex + 1}) {item.question}</Text>
                     <View>
@@ -31,6 +31,7 @@ const QuizReportQuestions = ({ quizQuestions, quizReport }) => {
 
                             return (
                                 <View
+                                    key={index}
                                     style={[styles.answersContainer,
                                     {
                                         backgroundColor: rightAnswerButton
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         borderColor: colors.LT_GREY,
         marginBottom: units.height / 3
     },
-    questionContainer:{
+    questionContainer: {
         // marginBottom: 40,
     },
     quizHeaderText: {

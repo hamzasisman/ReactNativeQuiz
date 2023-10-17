@@ -8,6 +8,8 @@ import Fonts from '../../../../theme/Fonts';
 import { units } from '../../../../theme/Units';
 import { getFormattedTime } from '../../../../utils/utility';
 import AppButton from '../../../components/Button';
+import InfoModal from '../../../components/InfoModal';
+import InfoModalTwoButtons from '../../../components/InfoModalTwoButtons';
 import AnswerButton from './AnswerButton';
 import QuizReport from './QuizReport';
 import QuizTimer from './QuizTimer';
@@ -15,7 +17,7 @@ import QuizTimer from './QuizTimer';
 const quizInformationStaticData = {
     quizId: "cf81ed71-e3e8-4706-b7a1-4a939f09f4ab",
     bookName: "Beginner / Level 2 / Unit 1",
-    duration: 100,
+    duration: 10,
     questions: [
         {
             id: 1,
@@ -155,6 +157,8 @@ const QuizQuestions = (props) => {
     const [quizReport, setQuizReport] = useState({});
     // Kullanıcının quizi bitirdiğinde rapor sayfasını göstermek için kullanılır.
     const [showQuizReport, setShowQuizReport] = useState(false);
+    const [modalVisibility, setModalVisibility] = useState(false);
+    const [modalTwoButtonisibility, setModalTwoButtonisibility] = useState(false);
 
     //Rapor sayfasında 'Tekrar Çözmek İstiyorum' butonuna tıklandığında kullanılır.
     const solveAgain = () => {
@@ -226,7 +230,7 @@ const QuizQuestions = (props) => {
 
     // Süre dolduğunda rapor sayfasına yönlendirilir.
     useEffect(() => {
-        isTimerEnd && console.log("Süre Doldu");
+        isTimerEnd && setModalVisibility(modalVisibility => true)
     }, [isTimerEnd]);
 
     return (
@@ -247,7 +251,13 @@ const QuizQuestions = (props) => {
                         pauseTimer={pauseTimer}
                     />
                     <View style={styles.quizContainer}>
-                        <TouchableOpacity style={styles.closeContainer}>
+                        <TouchableOpacity
+                            style={styles.closeContainer}
+                            onPress={() => {
+                                setPauseTimer(pauseTimer => true);
+                                setModalTwoButtonisibility(modalTwoButtonisibility => true);
+                            }}
+                        >
                             <Close width={24} height={24} />
                         </TouchableOpacity>
                         <Text style={styles.title}>{quizInformation.bookName}</Text>
@@ -288,6 +298,29 @@ const QuizQuestions = (props) => {
                     />
                 </>
             )}
+            <InfoModal
+                visibility={modalVisibility}
+                message={strings.quiz.timer_end_description}
+                buttonText={strings.quiz.show_report}
+                onPress={() => {
+                    setModalVisibility(false);
+                    setShowQuizReport(showQuizReport => true);
+                }}
+            />
+            <InfoModalTwoButtons
+                visibility={modalTwoButtonisibility}
+                firstButtonText={strings.log_out_drawer}
+                onPressFirst={() => {
+                    setPauseTimer(pauseTimer => false);
+                    setModalTwoButtonisibility(false);
+                }}
+                secondButtonText={strings.quiz.want_continue}
+                onPressSecond={() => {
+                    setPauseTimer(pauseTimer => false);
+                    setModalTwoButtonisibility(false);
+                }}
+                message={strings.quiz.quit_modal_text}
+            />
         </>
     );
 };
