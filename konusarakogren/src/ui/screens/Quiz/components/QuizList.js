@@ -1,15 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useLocalization } from '../../../../hooks/useLocalization';
 
 const QuizList = ({ books, setSelectedQuiz }) => {
     const strings = useLocalization();
 
     return (
-        <GestureHandlerRootView>
-            
-        </GestureHandlerRootView>
+        <View></View>
     );
 };
 

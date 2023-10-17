@@ -6,16 +6,22 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Platform,
+  Modal,
   View
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { BookPreview, Check, DownArrow, PlayWhite } from '../../../assets/svgs';
+import { BookPreview, Check, DownArrow, PlayWhite, CloseImage } from '../../../assets/svgs';
 import { useLocalization } from '../../../hooks/useLocalization';
 import { colors } from '../../../theme/Colors';
 import Fonts from '../../../theme/Fonts';
 import { units } from '../../../theme/Units';
 import TopMenu from '../../components/TopMenu';
 import QuizQuestions from './components/QuizQuestions';
+import ImageViewer from 'ko-react-native-image-zoom-viewer';
+import CustomModal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
+import WebView from 'react-native-webview';
 
 const books = [
   { id: 1, quizId: "c4fa0441-aa17-4c63-b0ba-59f7921a7e53", bookName: "Beginner / Level 2 / Unit 1", bookLink: "https://books.clickivo.com/books.php?comp=1&book=_ClickIVO/L1/S2/191.jpg", isCompleted: false },
@@ -55,15 +61,20 @@ export default function Quiz({ navigation }) {
   const { language } = useSelector(state => state.locale);
   const strings = useLocalization();
 
-  const modifiedText = strings.quiz.answered_quiz.split('#check#').map((part, index) => (
-    index % 2 !== 0 ? <Check key={index} width={20} height={20} /> + part : part
-  ));
+  const parts = strings.quiz.answered_quiz.split('#check#');
 
   const [selectedQuiz, setSelectedQuiz] = useState("");
   const [startIdx, setStartIdx] = useState(0);
+  const [selectedBookUrl, setSelectedBookUrl] = useState("");
+  const [imageModalVisibility, setImageModalVisibility] = useState(false);
+  const [url, setUrl] = useState(null);
+  const [animationVisible, setAnimationVisible] = useState(true);
+  const animation = require('../../../assets/animations/zoom.json');
 
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 15;
   const INITIAL_START_IDX = 14;
+
+  console.log(selectedBookUrl)
 
   const visibleBooks = books.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
@@ -71,6 +82,11 @@ export default function Quiz({ navigation }) {
     return visibleBooks.map((book, index) => {
       return (
         <View key={index}>
+          {index !== 0 && (
+            <View
+              style={styles.seperator}
+            />
+          )}
           <View key={index} style={styles.contentContainer}>
             <View style={[
               styles.textContainer,
@@ -84,19 +100,15 @@ export default function Quiz({ navigation }) {
                   fontWeight: book.id == INITIAL_START_IDX ? 'bold' : 'normal'
                 }
               ]}>{book.bookName}</Text>
-              {/* <View style={[styles.badgeContainer,
-              {
-                display: book.id == INITIAL_START_IDX ? 'flex' : 'none'
-              }
-              ]}>
-                <Text style={styles.badge}>{strings.quiz.last_lesson}</Text>
-              </View> */}
             </View>
             <View style={styles.rightContainer}>
               {book.isCompleted && (
                 <Check width="20" height="20" />
               )}
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                setSelectedBookUrl(book.bookLink);
+                setImageModalVisibility(true);
+              }} >
                 <BookPreview width="24" height="24" />
               </TouchableOpacity>
               <TouchableOpacity
@@ -108,18 +120,9 @@ export default function Quiz({ navigation }) {
                   height={units.height / 48}
                   marginHorizontal={units.height / 110}
                 />
-                {/* <Text style={styles.playButtonText}>{strings.quiz.start}</Text> */}
               </TouchableOpacity>
             </View>
           </View>
-          <View
-            style={[
-              styles.seperator,
-              {
-                display: index == books.length - 1 ? 'none' : 'flex'
-              }
-            ]}
-          />
         </View>
       );
     });
@@ -161,6 +164,9 @@ export default function Quiz({ navigation }) {
 
     return displayedItems;
   };
+
+  const INJECTEDJAVASCRIPT =
+    "const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.7'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); ";
 
   // İlk yükleme veya ITEMS_PER_PAGE değiştiğinde çalışır
   useEffect(() => {
@@ -231,7 +237,10 @@ export default function Quiz({ navigation }) {
                     <Content />
 
                     <TouchableOpacity
-                      style={styles.arrowContainer}
+                      style={[styles.arrowContainer,
+                      {
+                        marginBottom: 20
+                      }]}
                       onPress={() => { !showDownButton && handleDownPress() }}
                     >
                       <DownArrow style={{ opacity: showDownButton ? 0 : 100 }}
@@ -243,7 +252,9 @@ export default function Quiz({ navigation }) {
                   : null}
               </View>
               <Text style={styles.bottomMessage}>
-                {modifiedText}
+                {parts[0]}
+                <Check width={20} height={20} />
+                {parts[1]}
               </Text>
             </>
           )}
@@ -251,6 +262,78 @@ export default function Quiz({ navigation }) {
             <QuizQuestions quizId={selectedQuiz} />
           )}
         </ScrollView>
+
+        {/* image modal */}
+        {Platform.OS == 'ios' ? (
+          <CustomModal
+            style={{ margin: 0 }}
+            isVisible={imageModalVisibility}
+            transparent={true}
+            onBackdropPress={() => {
+              setImageModalVisibility(false);
+            }}>
+            <View style={styles.modal}>
+              <TouchableOpacity
+                onPress={() => {
+                  setImageModalVisibility(false);
+                  setAnimationVisible(true);
+                }}
+                style={styles.closeImage}>
+                <CloseImage
+                  width={units.height / 22}
+                  height={units.height / 22}
+                />
+              </TouchableOpacity>
+              <WebView
+                style={styles.webview}
+                source={{ uri: selectedBookUrl }}
+                injectedJavaScript={INJECTEDJAVASCRIPT}
+              />
+              {animationVisible && (
+                <View style={styles.overlay}>
+                  <LottieView
+                    style={styles.animation}
+                    autoPlay
+                    loop={false}
+                    source={animation}
+                    onAnimationFinish={() => setAnimationVisible(false)}
+                  />
+                </View>
+              )}
+            </View>
+          </CustomModal>
+        ) : (
+          <Modal visible={imageModalVisibility} transparent={true}>
+            <TouchableOpacity
+              onPress={() => {
+                setImageModalVisibility(false);
+                setAnimationVisible(true);
+              }}
+              style={styles.closeImageAndroid}>
+              <CloseImage
+                width={units.height / 22}
+                height={units.height / 22}
+              />
+            </TouchableOpacity>
+            {/* resmin üstüne index görünmemesi için node_modules/react-native-image-zoom-viewer/built/image-viewer.style.js dosyasında countText'e display:"none" ekle. */}
+            <ImageViewer
+              imageUrls={[{ selectedBookUrl }]}
+              backgroundColor="rgba(0, 0, 0, 0.6)"
+              saveToLocalByLongPress={false}
+            />
+            {animationVisible && (
+              <View style={styles.overlay}>
+                <LottieView
+                  style={styles.animation}
+                  autoPlay
+                  loop={false}
+                  source={animation}
+                  onAnimationFinish={() => setAnimationVisible(false)}
+                />
+              </View>
+            )}
+          </Modal>
+        )}
       </View>
     </>
   );
@@ -260,11 +343,12 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     alignItems: 'center',
-    width: units.width
+    width: units.width,
   },
   scrollViewContainer: {
     marginHorizontal: units.width / 36,
     marginTop: units.width / 24,
+    marginBottom: units.height / 3.4
   },
   title: {
     fontFamily: Fonts.type.bold,
@@ -332,16 +416,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 2,
   },
-  // badgeContainer: {
-  //   backgroundColor: colors.ORANGE,
-  //   borderRadius: 10,
-  //   paddingVertical: units.height / 144,
-  //   paddingHorizontal: units.width / 60,
-  // },
-  // badge: {
-  //   fontSize: Fonts.size(12),
-  //   color: colors.WHITE,
-  // },
   playButtonContainer: {
     backgroundColor: colors.BLUE,
     borderRadius: 10,
@@ -352,11 +426,6 @@ const styles = StyleSheet.create({
     paddingVertical: units.height / 144,
     paddingHorizontal: units.width / 60,
   },
-  // playButtonText: {
-  //   fontFamily: Fonts.type.bold,
-  //   fontSize: PixelRatio.getFontScale() > 3 ? Fonts.size(7) : Fonts.size(12),
-  //   color: colors.WHITE
-  // },
   arrowContainer: {
     alignItems: 'center',
   },
@@ -373,5 +442,48 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 2,
     textAlign: 'center',
+    marginBottom: 10,
+  },
+  imageWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  icon: {
+    position: 'absolute',
+    zIndex: 1
+  },
+  book: {
+    width: units.width / 1.4,
+    height: units.height / 4
+  },
+  closeImage: {
+    position: 'absolute',
+    zIndex: 1,
+    top: units.height / -45,
+    right: units.width / 75
+  },
+  closeImageAndroid: {
+    top: units.height / 12,
+    right: units.width / 18,
+    position: 'absolute',
+    zIndex: 1
+  },
+  modal: {
+    flex: 1,
+    marginHorizontal: units.height / 100,
+    marginVertical: units.height / 10
+  },
+  overlay: {
+    position: 'absolute',
+    zIndex: 99999,
+    top: units.height / 3.3,
+    left: units.width / 3.7
+  },
+  animation: {
+    width: units.width / 2.5
+  },
+  webview: {
+    backgroundColor: 'transparent',
+    marginTop: units.height / 4.2
   }
 });
