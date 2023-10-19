@@ -81,7 +81,7 @@ const CustomDrawer = props => {
 
                 <TouchableOpacity
                     onPress={() => {
-                        Linking.openSettings();
+                        // Linking.openSettings();
                     }}>
                     <View style={styles.container}>
                         <View style={styles.icon}>

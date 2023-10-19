@@ -3,12 +3,12 @@ import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
 import { localizationReducer } from './LocalizationRedux';
-
+import { pageReducer } from './PageRedux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
   locale: localizationReducer,
-
+  page: pageReducer,
 });
 
 const persistConfig = {

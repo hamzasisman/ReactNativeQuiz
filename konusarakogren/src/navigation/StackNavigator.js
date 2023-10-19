@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import routes from './routes';
 
 // Screen  Components
@@ -8,17 +7,15 @@ import Quiz from '../ui/screens/Quiz/Quiz';
 
 // Navigators
 import { AppDrawerStack } from './AppNavigator';
-import VideoPlayer from '../ui/screens/SpeakingLesson/Screens/VideoPlayer';
-const Stack = createStackNavigator();
 
+const Stack = createStackNavigator();
+console.log("stack");
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={routes.QUIZ}
-      screenOptions={{ headerShown: false, animationEnabled: false }}>
-      <Stack.Screen name={routes.QUIZ} component={Quiz} />
-      {/* <Stack.Screen name={routes.VIDEO_SCREEN} component={VideoPlayer} /> */}
-      {/* <Stack.Screen name={'DrawerStack'} component={AppDrawerStack} /> */}
+      initialRouteName="Quiz">
+      <Stack.Screen name="Quiz" component={Quiz} />
+      <Stack.Screen name={'DrawerStack'} component={AppDrawerStack} />
     </Stack.Navigator>
   );
 };

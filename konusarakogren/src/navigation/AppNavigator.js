@@ -14,11 +14,11 @@ import { colors } from '../theme/Colors';
 import { units } from '../theme/Units';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import CustomDrawer from './CustomDrawer';
-import { useLocalization } from '../hooks/useLocalization';
-import routes from './routes';
+// import CustomDrawer from './CustomDrawer';
+// import { useLocalization } from '../hooks/useLocalization';
 import QuizFeedNavigator from './QuizFeedNavigator';
-import Quiz from '../ui/screens/Quiz/Quiz';
+import routes from './routes';
+// import Quiz from '../ui/screens/Quiz/Quiz';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,7 +54,7 @@ export const AppDrawerStack = ({ navigation }) => {
     </Drawer.Navigator>
   );
 };
-//screen kısmında icon :1 verdim daha sonra eklenecek menüler için iconları farklı farklı alabilmek için işlemin devamı custom drawer içerisinde
+// screen kısmında icon :1 verdim daha sonra eklenecek menüler için iconları farklı farklı alabilmek için işlemin devamı custom drawer içerisinde
 
 const AppNavigator = () => {
   const insets = useSafeAreaInsets();

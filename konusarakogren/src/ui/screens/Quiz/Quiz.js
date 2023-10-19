@@ -67,14 +67,11 @@ export default function Quiz({ navigation }) {
   const [startIdx, setStartIdx] = useState(0);
   const [selectedBookUrl, setSelectedBookUrl] = useState("");
   const [imageModalVisibility, setImageModalVisibility] = useState(false);
-  const [url, setUrl] = useState(null);
   const [animationVisible, setAnimationVisible] = useState(true);
   const animation = require('../../../assets/animations/zoom.json');
 
   const ITEMS_PER_PAGE = 15;
   const INITIAL_START_IDX = 14;
-
-  console.log(selectedBookUrl)
 
   const visibleBooks = books.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
@@ -168,6 +165,19 @@ export default function Quiz({ navigation }) {
   const INJECTEDJAVASCRIPT =
     "const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.7'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); ";
 
+  // useEffect(() => {
+  //   dispatch(
+  //     setVisitedPage('DrawerStack', {
+  //       screen: routes.APP_NAVIGATOR,
+  //       params: {
+  //         screen: 'QuizFeed',
+  //         params: {
+  //           screen: routes.QUIZ
+  //         }
+  //       }
+  //     })
+  //   );
+  // }, []);
   // İlk yükleme veya ITEMS_PER_PAGE değiştiğinde çalışır
   useEffect(() => {
     // Seçilen öğenin indeksini bulur

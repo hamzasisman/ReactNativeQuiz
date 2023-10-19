@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Close } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
+import routes from '../../../../navigation/routes';
 import { colors } from '../../../../theme/Colors';
 import Fonts from '../../../../theme/Fonts';
 import { units } from '../../../../theme/Units';
@@ -132,9 +133,9 @@ const quizInformationStaticData = {
     ]
 }
 
-const QuizQuestions = (props) => {
+const QuizQuestions = ({ navigation }) => {
 
-    const { quizId } = props;
+    // const { quizId } = props;
     const strings = useLocalization();
 
     // Servisten gelen quiz bilgileri bu state'in içerisine atılacak.
@@ -311,7 +312,7 @@ const QuizQuestions = (props) => {
                 visibility={modalTwoButtonisibility}
                 firstButtonText={strings.log_out_drawer}
                 onPressFirst={() => {
-                    setPauseTimer(pauseTimer => false);
+                    navigation.navigate(routes.QUIZ);
                     setModalTwoButtonisibility(false);
                 }}
                 secondButtonText={strings.quiz.want_continue}
