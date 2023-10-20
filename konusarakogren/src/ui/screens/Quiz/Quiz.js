@@ -71,10 +71,8 @@ export default function Quiz({ navigation }) {
   const [animationVisible, setAnimationVisible] = useState(true);
   const animation = require('../../../assets/animations/zoom.json');
 
-  const ITEMS_PER_PAGE = 15;
+  const ITEMS_PER_PAGE = 5;
   const INITIAL_START_IDX = 14;
-
-  console.log(selectedBookUrl)
 
   const visibleBooks = books.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
@@ -130,17 +128,25 @@ export default function Quiz({ navigation }) {
 
   // Yukarı ok tıklanırsa çalışacak işlev
   const handleUpPress = () => {
-    if (startIdx > 0) {
-      setStartIdx(startIdx - ITEMS_PER_PAGE);
+    let newStartIdx = startIdx - ITEMS_PER_PAGE;
+
+    if (newStartIdx < 0) {
+      newStartIdx = 0;
     }
+
+    setStartIdx(newStartIdx);
   };
 
   // Aşağı ok tıklanırsa çalışacak işlev
   const handleDownPress = () => {
     const maxStartIdx = Math.max(0, books.length - ITEMS_PER_PAGE);
-    if (startIdx < maxStartIdx) {
-      setStartIdx(startIdx + ITEMS_PER_PAGE);
+    let newStartIdx = startIdx + ITEMS_PER_PAGE;
+
+    if (newStartIdx > maxStartIdx) {
+      newStartIdx = maxStartIdx;
     }
+
+    setStartIdx(newStartIdx);
   };
 
   // Görüntülenen öğeleri hesaplar ve eksik öğeleri doldurur
@@ -259,7 +265,7 @@ export default function Quiz({ navigation }) {
             </>
           )}
           {selectedQuiz.length > 0 && (
-            <QuizQuestions quizId={selectedQuiz} />
+            <QuizQuestions setSelectedQuiz={setSelectedQuiz} />
           )}
         </ScrollView>
 

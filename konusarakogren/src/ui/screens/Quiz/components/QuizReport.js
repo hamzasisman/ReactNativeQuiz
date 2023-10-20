@@ -12,7 +12,7 @@ import QuizReportQuestions from './QuizReportQuestions';
 
 const QuizReport = (props) => {
 
-    const { startTime, quizReport, solveAgain, quizQuestions } = props;
+    const { startTime, quizReport, solveAgain, quizQuestions, setSelectedQuiz } = props;
     const strings = useLocalization();
 
     const [rightAnswersCount, setRightAnswersCount] = useState(0);
@@ -24,8 +24,8 @@ const QuizReport = (props) => {
     // const navigation = useNavigation();
 
     const handleNavigation = () => {
-        // navigation.navigate(routes.QUIZ)
-        console.log("Ana Sayfa")
+        //seçili olan quiz'i sıfırlayarak başlangıç sayfasına dönmesini sağlıyoruz.
+        setSelectedQuiz( selectedQuiz => "")
     };
 
     // QuizReport değiştiğinde doğru, yanlış ve boş cevap sayılarını hesaplar
