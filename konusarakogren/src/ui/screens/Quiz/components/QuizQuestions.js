@@ -17,7 +17,7 @@ import QuizTimer from './QuizTimer';
 const quizInformationStaticData = {
     quizId: "cf81ed71-e3e8-4706-b7a1-4a939f09f4ab",
     bookName: "Beginner / Level 2 / Unit 1",
-    duration: 10,
+    duration: 0.3,
     questions: [
         {
             id: 1,
@@ -134,7 +134,7 @@ const quizInformationStaticData = {
 
 const QuizQuestions = (props) => {
 
-    const { quizId } = props;
+    const { setSelectedQuiz } = props;
     const strings = useLocalization();
 
     // Servisten gelen quiz bilgileri bu state'in içerisine atılacak.
@@ -241,6 +241,7 @@ const QuizQuestions = (props) => {
                     quizReport={quizReport}
                     quizQuestions={quizInformation.questions}
                     solveAgain={solveAgain}
+                    setSelectedQuiz = {setSelectedQuiz}
                 />
             )}
             {(currentQuestionIndex !== quizInformation.questions.length && !showQuizReport) && (
@@ -311,7 +312,8 @@ const QuizQuestions = (props) => {
                 visibility={modalTwoButtonisibility}
                 firstButtonText={strings.log_out_drawer}
                 onPressFirst={() => {
-                    setPauseTimer(pauseTimer => false);
+                    //seçili olan quiz'i sıfırlayarak başlangıç sayfasına dönmesini sağlıyoruz.
+                    setSelectedQuiz(selectedQuiz => "");
                     setModalTwoButtonisibility(false);
                 }}
                 secondButtonText={strings.quiz.want_continue}
