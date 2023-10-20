@@ -132,9 +132,9 @@ const quizInformationStaticData = {
     ]
 }
 
-const QuizQuestions = (props) => {
+const QuizQuestions = ({navigation}) => {
 
-    const { quizId } = props;
+    // const { quizId } = props;
     const strings = useLocalization();
 
     // Servisten gelen quiz bilgileri bu state'in içerisine atılacak.
@@ -311,7 +311,7 @@ const QuizQuestions = (props) => {
                 visibility={modalTwoButtonisibility}
                 firstButtonText={strings.log_out_drawer}
                 onPressFirst={() => {
-                    setPauseTimer(pauseTimer => false);
+                    navigation.navigate(routes.QUIZ);
                     setModalTwoButtonisibility(false);
                 }}
                 secondButtonText={strings.quiz.want_continue}

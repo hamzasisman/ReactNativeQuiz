@@ -1,4 +1,5 @@
 export default Object.freeze({
-    QUIZ: 'Quiz'
+    QUIZ: 'Quiz',
+    HAMZA: 'Hamza',
   });
   

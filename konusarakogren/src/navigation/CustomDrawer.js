@@ -138,10 +138,4 @@ const styles = StyleSheet.create({
     bottom: {
         justifyContent: 'flex-end'
     },
-    language: {
-        flexDirection: 'column-reverse'
-    },
-    list: {
-        marginBottom: units.height / 25
-    }
 });

@@ -5,9 +5,11 @@ import { combineReducers } from 'redux';
 import { localizationReducer } from './LocalizationRedux';
 
 import { devToolsEnhancer } from 'redux-devtools-extension';
+import { pageReducer } from './PageRedux';
 
 const rootReducer = combineReducers({
   locale: localizationReducer,
+  page: pageReducer,
 
 });
 

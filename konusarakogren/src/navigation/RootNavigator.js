@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
-import { NativeModules, Platform, Settings, Vibration } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './StackNavigator';
-import navigationTheme from './navigationTheme';
-
+import React from 'react';
 import linking from '../utils/linking';
-
+import navigationTheme from './navigationTheme';
+import StackNavigator from './StackNavigator';
 
 export default function RootNavigator() {
 
-
-    return (
-        <NavigationContainer theme={navigationTheme} linking={linking}>
-            <StackNavigator />
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer >
+        <StackNavigator theme={navigationTheme} linking={linking} />
+    </NavigationContainer>
+  );
 }
