@@ -35,6 +35,6 @@ export const turkish = {
     last_lesson: "Son dərs",
     show_result: "Nəticəyə Baxın"
   },
-  turkish: 'Türkçe',
+  azerbaijani: 'Azərbaycanlı',
   english: 'English'
 };
