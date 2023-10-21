@@ -24,7 +24,7 @@ const AnswerButton = (props) => {
             style={[styles.answersContainer,
             {
                 backgroundColor: focusedButton
-                    ? colors.LT_BLUE
+                    ? colors.LT_PINK
                     : rightAnswerButton
                         ? colors.QUIZ_GREEN
                         : wrongAnswerButton
@@ -35,7 +35,7 @@ const AnswerButton = (props) => {
             <View style={styles.answer}>
                 <View style={[styles.answerIcon, {
                     backgroundColor: focusedButton
-                        ? colors.LT_BLUE
+                        ? colors.LT_PINK
                         : rightAnswerButton
                             ? colors.QUIZ_GREEN
                             : wrongAnswerButton
@@ -43,7 +43,7 @@ const AnswerButton = (props) => {
                                 : colors.WHITE,
                     borderColor: (rightAnswerButton || wrongAnswerButton)
                         ? colors.WHITE
-                        : colors.MD_PINK
+                        : colors.BORDER_PINK
                 }]}>
                     <Text
                         style={[styles.answerChoice, {
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginVertical: units.height / 150,
         borderWidth: 1,
-        borderColor: colors.MD_GREY,
+        borderColor: colors.BORDER_PINK,
+        backgroundColor: colors.LT_PINK,
         overflow: 'hidden'
     },
     answerText: {
@@ -91,8 +92,8 @@ const styles = StyleSheet.create({
     answerIcon: {
         paddingHorizontal: units.width / 35,
         paddingVertical: units.height / 50,
-        borderColor: colors.MD_GREY,
+        borderColor: colors.MD_PINK,
         borderRightWidth: 1,
-        backgroundColor: colors.WH_GREY
+        backgroundColor: colors.LT_PINK
     },
 });
