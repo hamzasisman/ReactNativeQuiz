@@ -18,6 +18,7 @@ import QuizQuestions from './components/QuizQuestions';
 
 import stylesLTR from '../../styles/screens/Quiz/ltr';
 import stylesRTL from '../../styles/screens/Quiz/rtl';
+import { useSelector } from 'react-redux';
 
 const books = [
   { id: 1, quizId: "c4fa0441-aa17-4c63-b0ba-59f7921a7e53", bookName: "Beginner / Level 2 / Unit 1", bookLink: "https://books.clickivo.com/books.php?comp=1&book=_ClickIVO/L1/S2/191.jpg", isCompleted: false },
@@ -54,8 +55,7 @@ const books = [
 
 export default function Quiz({ navigation }) {
 
-  // const {language} = useSelector(state => state.locale);
-  const language = 'al';
+  const {language} = useSelector(state => state.locale);
   const styles = language === 'al' ? stylesRTL : stylesLTR;
   const strings = useLocalization();
 

@@ -69,14 +69,14 @@ export default StyleSheet.create({
         backgroundColor: colors.BORDER_PINK
       },
       contentContainer: {
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 4,
       },
       rightContainer: {
-        marginRight: units.width / 48,
-        flexDirection: 'row-reverse',
+        marginLeft: units.width / 48,
+        flexDirection: 'row',
         alignItems: 'center',
         gap: 2,
       },
@@ -89,7 +89,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: units.height / 144,
         paddingHorizontal: units.width / 60,
-        transform: [{ rotate: '180deg' }],
       },
       arrowContainer: {
         alignItems: 'center',
