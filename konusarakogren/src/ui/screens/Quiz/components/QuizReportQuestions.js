@@ -47,7 +47,7 @@ const QuizReportQuestions = ({ quizQuestions, quizReport }) => {
                                                 ? colors.QUIZ_GREEN
                                                 : wrongAnswerButton
                                                     ? colors.MD_RED
-                                                    : colors.WHITE,
+                                                    : colors.WH_GREY,
                                             borderColor: (rightAnswerButton || wrongAnswerButton)
                                                 ? colors.WHITE
                                                 : colors.MD_GREY
