@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 import { colors } from "../../../../theme/Colors";
 import { getAnswerTitleByIndex } from "../../../../utils/utility";
 
@@ -10,8 +11,7 @@ const AnswerButton = (props) => {
 
     const { answer, onPress, index, userAnswer, isClickedControlButton, currentQuestionData, quizReport } = props;
 
-    // const {language} = useSelector(state => state.locale);
-    const language = 'al';
+    const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
 
     // Kullanıcının hiçbir akisyon almadığı (cevap seçmediği) butonun koşuludur.

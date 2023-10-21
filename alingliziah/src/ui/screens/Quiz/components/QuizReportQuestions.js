@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import { colors } from '../../../../theme/Colors';
 import { getAnswerTitleByIndex } from '../../../../utils/utility';
 
@@ -9,8 +10,7 @@ import stylesRTL from '../../../styles/screens/Quiz/components/QuizReportQuestio
 
 const QuizReportQuestions = ({ quizQuestions, quizReport }) => {
 
-    // const {language} = useSelector(state => state.locale);
-    const language = 'al';
+    const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
 
     return (

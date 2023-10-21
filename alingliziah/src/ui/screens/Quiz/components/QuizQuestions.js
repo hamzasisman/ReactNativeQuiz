@@ -11,6 +11,7 @@ import AnswerButton from './AnswerButton';
 import QuizReport from './QuizReport';
 import QuizTimer from './QuizTimer';
 
+import { useSelector } from 'react-redux';
 import stylesLTR from '../../../styles/screens/Quiz/components/QuizQuestions/ltr';
 import stylesRTL from '../../../styles/screens/Quiz/components/QuizQuestions/rtl';
 
@@ -138,8 +139,7 @@ const QuizQuestions = (props) => {
     const { setSelectedQuiz } = props;
     const strings = useLocalization();
 
-    // const {language} = useSelector(state => state.locale);
-    const language = 'al';
+    const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
 
     // Servisten gelen quiz bilgileri bu state'in içerisine atılacak.

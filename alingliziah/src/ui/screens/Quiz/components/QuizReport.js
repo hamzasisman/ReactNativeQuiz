@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Close, Completed } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
 import { colors } from '../../../../theme/Colors';
-import Fonts from '../../../../theme/Fonts';
-import { units } from '../../../../theme/Units';
 import { getFormattedTime } from '../../../../utils/utility';
 import AppButton from '../../../components/Button';
 import QuizReportQuestions from './QuizReportQuestions';
 
+import { useSelector } from 'react-redux';
 import stylesLTR from '../../../styles/screens/Quiz/components/QuizReport/ltr';
 import stylesRTL from '../../../styles/screens/Quiz/components/QuizReport/rtl';
 
 const QuizReport = (props) => {
 
     const { startTime, quizReport, solveAgain, quizQuestions, setSelectedQuiz } = props;
-    // const {language} = useSelector(state => state.locale);
-    const language = 'al';
+    const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
     const strings = useLocalization();
 

@@ -34,16 +34,14 @@ const AnswerButton = (props) => {
             ]}>
             <View style={styles.answer}>
                 <View style={[styles.answerIcon, {
-                    backgroundColor: focusedButton
-                        ? colors.LT_BLUE
-                        : rightAnswerButton
+                    backgroundColor: rightAnswerButton
                             ? colors.QUIZ_GREEN
                             : wrongAnswerButton
                                 ? colors.MD_RED
-                                : colors.WHITE,
+                                : colors.WH_GREY,
                     borderColor: (rightAnswerButton || wrongAnswerButton)
                         ? colors.WHITE
-                        : colors.MD_PINK
+                        : colors.MD_GREY
                 }]}>
                     <Text
                         style={[styles.answerChoice, {

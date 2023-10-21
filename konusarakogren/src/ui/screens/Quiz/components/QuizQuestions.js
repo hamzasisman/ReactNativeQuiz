@@ -17,7 +17,7 @@ import QuizTimer from './QuizTimer';
 const quizInformationStaticData = {
     quizId: "cf81ed71-e3e8-4706-b7a1-4a939f09f4ab",
     bookName: "Beginner / Level 2 / Unit 1",
-    duration: 0.3,
+    duration: 10,
     questions: [
         {
             id: 1,

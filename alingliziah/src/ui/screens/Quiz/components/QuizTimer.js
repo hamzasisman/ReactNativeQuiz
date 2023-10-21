@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Timer } from '../../../../assets/svgs';
 import { useLocalization } from '../../../../hooks/useLocalization';
 
@@ -8,8 +9,7 @@ import stylesRTL from '../../../styles/screens/Quiz/components/QuizTimer/rtl';
 
 const QuizTimer = ({ duration, setIsTimerEnd, pauseTimer }) => {
 
-    // const {language} = useSelector(state => state.locale);
-    const language = 'al';
+    const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
 
     const strings = useLocalization();
