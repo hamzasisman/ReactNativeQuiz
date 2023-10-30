@@ -18,12 +18,12 @@ const QuizReportQuestions = ({ quizQuestions, quizReport }) => {
                         marginTop: questionIndex !== 0 ? 40 : 0
                     }]}
                 >
-                    <Text style={styles.quizHeaderText}>{questionIndex + 1}) {item.question}</Text>
+                    <Text style={styles.quizHeaderText}>{questionIndex + 1}) {item.content}</Text>
                     <View>
-                        {item.answers.map((answer, index) => {
+                        {item.questionAnswers.map((answer, index) => {
 
                             // Kullanıcının soruyu boş geçmediyse doğru cevabı yeşil yakıyoruz.
-                            let rightAnswerButton = (quizReport.questions[questionIndex].rightAnswer === answer.id) && (quizReport.questions[questionIndex].userAnswer !== -1);
+                            let rightAnswerButton = (answer.iscorrectAnswer) && (quizReport.questions[questionIndex].userAnswer !== -1);
                             // Kullanıcının seçtiği cevap yanlışsa seçili cevabı kırmızı yakıyoruz.
                             let wrongAnswerButton = (quizReport.questions[questionIndex].userAnswer !== quizReport.questions[questionIndex].right_answer && quizReport.questions[questionIndex].userAnswer === answer.id)
 

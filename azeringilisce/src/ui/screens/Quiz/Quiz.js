@@ -69,6 +69,8 @@ export default function Quiz({ navigation }) {
   const [imageModalVisibility, setImageModalVisibility] = useState(false);
   const [url, setUrl] = useState(null);
   const [animationVisible, setAnimationVisible] = useState(true);
+  const [bookName, setBookName] = useState(null);
+
   const animation = require('../../../assets/animations/zoom.json');
 
   const ITEMS_PER_PAGE = 5;
@@ -111,7 +113,7 @@ export default function Quiz({ navigation }) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.playButtonContainer}
-                onPress={() => setSelectedQuiz(book.quizId)}
+                onPress={() => setSelectedQuiz(book)}
               >
                 <PlayWhite
                   width={units.height / 48}
@@ -188,6 +190,12 @@ export default function Quiz({ navigation }) {
     }
   }, [books, ITEMS_PER_PAGE]);
 
+  useEffect(() => {
+    if (Object.keys(selectedQuiz).length > 0) {
+      setBookName(bookName => selectedQuiz.bookName);
+    }
+  }, [selectedQuiz])
+
   // Görüntülenecek öğeleri hesaplar
   const showItems = calculateShowItems();
   // Yukarı Çık butonunun görünüp görünmeyeceğine karar verir. Eğer ilk öğe görüntüleniyorsa yukarı çık butonu görünmez.
@@ -213,7 +221,7 @@ export default function Quiz({ navigation }) {
         <ScrollView
           style={styles.scrollViewContainer}
           showsVerticalScrollIndicator={false}>
-          {selectedQuiz.length === 0 && (
+          {Object.keys(selectedQuiz).length === 0 && (
             <>
               <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>
@@ -264,8 +272,8 @@ export default function Quiz({ navigation }) {
               </Text>
             </>
           )}
-          {selectedQuiz.length > 0 && (
-            <QuizQuestions setSelectedQuiz={setSelectedQuiz} />
+          {Object.keys(selectedQuiz).length > 0 && (
+            <QuizQuestions setSelectedQuiz={setSelectedQuiz} bookName={bookName} />
           )}
         </ScrollView>
 

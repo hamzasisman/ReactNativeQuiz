@@ -15,7 +15,7 @@ const QuizTimer = ({ duration, setIsTimerEnd, pauseTimer }) => {
     const strings = useLocalization();
 
     // State değeri ve zamanlayıcı süresi
-    const [remainingTime, setRemainingTime] = useState(duration * 60); // 10 dakika (saniye cinsinden)
+    const [remainingTime, setRemainingTime] = useState(duration); // 10 dakika (saniye cinsinden)
     // Zamanlayıcı işlemi
     useEffect(() => {
         const timer = setInterval(() => {

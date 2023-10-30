@@ -9,19 +9,19 @@ import stylesRTL from '../../../styles/screens/Quiz/components/AnswerButton/rtl'
 
 const AnswerButton = (props) => {
 
-    const { answer, onPress, index, userAnswer, isClickedControlButton, currentQuestionData, quizReport } = props;
+    const { answer, onPress, index, userAnswer, isClickedControlButton, quizReport } = props;
 
     const {language} = useSelector(state => state.locale);
     const styles = language === 'al' ? stylesRTL : stylesLTR;
+    
+    const correctAnswerId = answer.iscorrectAnswer ? answer.id : null
 
-    // Kullanıcının hiçbir akisyon almadığı (cevap seçmediği) butonun koşuludur.
-    let normalButton = userAnswer !== answer.id;
     // Kullancının cevap seçtiğinde gördüğü butonun koşuludur.
     let focusedButton = !isClickedControlButton && userAnswer === answer.id;
     // Kullanıcının cevap seçtikten sonra 'Kontrol Et' butonuna tıkladığında gördüğü doğru cevap butonun koşuludur.
-    let rightAnswerButton = isClickedControlButton && currentQuestionData.rightAnswer === answer.id;
+    let rightAnswerButton = isClickedControlButton && answer.iscorrectAnswer;
     // Kullanıcının cevap seçtikten sonra 'Kontrol Et' butonuna tıkladığında gördüğü yanlış cevap butonun koşuludur.
-    let wrongAnswerButton = quizReport && isClickedControlButton && answer.id === quizReport.userAnswer && quizReport.userAnswer !== currentQuestionData.rightAnswer;
+    let wrongAnswerButton = quizReport && isClickedControlButton && answer.id === quizReport.userAnswer && quizReport.userAnswer !== correctAnswerId;
 
     return (
         <TouchableOpacity
