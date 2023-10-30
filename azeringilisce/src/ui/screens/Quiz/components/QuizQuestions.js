@@ -13,129 +13,140 @@ import InfoModalTwoButtons from '../../../components/InfoModalTwoButtons';
 import AnswerButton from './AnswerButton';
 import QuizReport from './QuizReport';
 import QuizTimer from './QuizTimer';
+import Config from "react-native-config";
 
 const quizInformationStaticData = {
     quizId: "cf81ed71-e3e8-4706-b7a1-4a939f09f4ab",
-    bookName: "Beginner / Level 2 / Unit 1",
-    duration: 10,
     questions: [
         {
             id: 1,
-            question: "They ...... to a meeting at a company yesterday",
-            answers: [
-                { id: 1, answer: "will go" },
-                { id: 2, answer: "have gone" },
-                { id: 3, answer: "were going" },
-                { id: 4, answer: "was going" },
+            content: "They ...... to a meeting at a company yesterday",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "will go", iscorrectAnswer: false },
+                { id: 2, answer: "have gone", iscorrectAnswer: false },
+                { id: 3, answer: "were going", iscorrectAnswer: true },
+                { id: 4, answer: "was going", iscorrectAnswer: false },
             ],
-            rightAnswer: 3
         },
         {
             id: 2,
-            question: "She always ...... her homework before going to bed.",
-            answers: [
-                { id: 1, answer: "do" },
-                { id: 2, answer: "does" },
-                { id: 3, answer: "did" },
-                { id: 4, answer: "done" },
+            content: "She always ...... her homework before going to bed.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "do", iscorrectAnswer: false },
+                { id: 2, answer: "does", iscorrectAnswer: true },
+                { id: 3, answer: "did", iscorrectAnswer: false },
+                { id: 4, answer: "done", iscorrectAnswer: false },
             ],
-            rightAnswer: 2
         },
         {
             id: 3,
-            question: "I ...... dinner when you called me last night.",
-            answers: [
-                { id: 1, answer: "am eating" },
-                { id: 2, answer: "was eating" },
-                { id: 3, answer: "ate" },
-                { id: 4, answer: "have eaten" },
+            content: "I ...... dinner when you called me last night.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "am eating", iscorrectAnswer: false },
+                { id: 2, answer: "was eating", iscorrectAnswer: true },
+                { id: 3, answer: "ate", iscorrectAnswer: false },
+                { id: 4, answer: "have eaten", iscorrectAnswer: false },
             ],
-            rightAnswer: 2
         },
         {
             id: 4,
-            question: "They ...... to the beach every summer.",
-            answers: [
-                { id: 1, answer: "go" },
-                { id: 2, answer: "goes" },
-                { id: 3, answer: "went" },
-                { id: 4, answer: "gone" },
+            content: "They ...... to the beach every summer.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "go", iscorrectAnswer: true },
+                { id: 2, answer: "goes", iscorrectAnswer: false },
+                { id: 3, answer: "went", iscorrectAnswer: false },
+                { id: 4, answer: "gone", iscorrectAnswer: false },
             ],
-            rightAnswer: 1
         },
         {
             id: 5,
-            question: "She is the best student in the class. She ...... studies very hard.",
-            answers: [
-                { id: 1, answer: "usually" },
-                { id: 2, answer: "never" },
-                { id: 3, answer: "always" },
-                { id: 4, answer: "rarely" },
+            content: "She is the best student in the class. She ...... studies very hard.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "usually", iscorrectAnswer: false },
+                { id: 2, answer: "never", iscorrectAnswer: false },
+                { id: 3, answer: "always", iscorrectAnswer: true },
+                { id: 4, answer: "rarely", iscorrectAnswer: false },
             ],
-            rightAnswer: 3
         },
         {
             id: 6,
-            question: "We ...... to the movies last night.",
-            answers: [
-                { id: 1, answer: "are going" },
-                { id: 2, answer: "have gone" },
-                { id: 3, answer: "went" },
-                { id: 4, answer: "go" },
+            content: "We ...... to the movies last night.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "are going", iscorrectAnswer: false },
+                { id: 2, answer: "have gone", iscorrectAnswer: false },
+                { id: 3, answer: "went", iscorrectAnswer: true },
+                { id: 4, answer: "go", iscorrectAnswer: false },
             ],
-            rightAnswer: 3
         },
         {
             id: 7,
-            question: "I ...... my keys. I can't find them anywhere.",
-            answers: [
-                { id: 1, answer: "have lost" },
-                { id: 2, answer: "losing" },
-                { id: 3, answer: "lost" },
-                { id: 4, answer: "am losing" },
+            content: "I ...... my keys. I can't find them anywhere.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "have lost", iscorrectAnswer: true },
+                { id: 2, answer: "losing", iscorrectAnswer: false },
+                { id: 3, answer: "lost", iscorrectAnswer: false },
+                { id: 4, answer: "am losing", iscorrectAnswer: false },
             ],
-            rightAnswer: 1
         },
         {
             id: 8,
-            question: "He ...... a book when I saw him yesterday.",
-            answers: [
-                { id: 1, answer: "reads" },
-                { id: 2, answer: "is reading" },
-                { id: 3, answer: "read" },
-                { id: 4, answer: "was reading" },
+            content: "He ...... a book when I saw him yesterday.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "reads", iscorrectAnswer: false },
+                { id: 2, answer: "is reading", iscorrectAnswer: false },
+                { id: 3, answer: "read", iscorrectAnswer: false },
+                { id: 4, answer: "was reading", iscorrectAnswer: true },
             ],
-            rightAnswer: 4
         },
         {
             id: 9,
-            question: "We ...... to the party last night, but it was too crowded.",
-            answers: [
-                { id: 1, answer: "went" },
-                { id: 2, answer: "go" },
-                { id: 3, answer: "have gone" },
-                { id: 4, answer: "going" },
+            content: "We ...... to the party last night, but it was too crowded.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "went", iscorrectAnswer: true },
+                { id: 2, answer: "go", iscorrectAnswer: false },
+                { id: 3, answer: "have gone", iscorrectAnswer: false },
+                { id: 4, answer: "going", iscorrectAnswer: false },
             ],
-            rightAnswer: 1
         },
         {
             id: 10,
-            question: "I ...... coffee every morning before work.",
-            answers: [
-                { id: 1, answer: "drink" },
-                { id: 2, answer: "drinks" },
-                { id: 3, answer: "drank" },
-                { id: 4, answer: "drunk" },
+            content: "I ...... coffee every morning before work.",
+            languageTitleType: 4,
+            questionContents: [],
+            questionAnswers: [
+                { id: 1, answer: "drink", iscorrectAnswer: true },
+                { id: 2, answer: "drinks", iscorrectAnswer: false },
+                { id: 3, answer: "drank", iscorrectAnswer: false },
+                { id: 4, answer: "drunk", iscorrectAnswer: false },
             ],
-            rightAnswer: 1
         }
     ]
 }
 
 const QuizQuestions = (props) => {
 
-    const { setSelectedQuiz } = props;
+    const { setSelectedQuiz, bookName } = props;
     const strings = useLocalization();
+
+    const quizDuration = Config.QUIZ_TIME_PER_QUESTION_IN_SECOND * quizInformationStaticData.questions.length;
 
     // Servisten gelen quiz bilgileri bu state'in içerisine atılacak.
     const [quizInformation, setQuizInformation] = useState(quizInformationStaticData);
@@ -168,10 +179,10 @@ const QuizQuestions = (props) => {
         setStartTime(startTime => getFormattedTime(new Date()));
         setQuizReport({
             quizId: quizInformation.quizId,
-            bookName: quizInformation.bookName,
-            questions: quizInformation.questions.map((item) => ({
-                id: item.id,
-                rightAnswer: item.rightAnswer,
+            bookName: bookName,
+            questions: quizInformation.questions.map((question) => ({
+                id: question.id,
+                rightAnswer: question.questionAnswers.find(answer => answer.iscorrectAnswer)?.id || -1,
                 userAnswer: -1,
             })),
         });
@@ -199,20 +210,25 @@ const QuizQuestions = (props) => {
         if (Object.keys(quizInformation).length > 0) {
             setQuizReport({
                 quizId: quizInformation.quizId,
-                bookName: quizInformation.bookName,
-                questions: quizInformation.questions.map((item) => ({
-                    id: item.id,
-                    rightAnswer: item.rightAnswer,
+                bookName: bookName,
+                questions: quizInformation.questions.map((question) => ({
+                    id: question.id,
+                    rightAnswer: question.questionAnswers.find(answer => answer.iscorrectAnswer)?.id || -1,
                     userAnswer: -1,
                 })),
             });
         }
     }, [quizInformation]);
 
+    // Her soru değiştiğinde kullanıcının verdiği cevap sıfırlanır.
+    useEffect(() => {
+        setUserAnswer(-1);
+    }, [currentQuestionIndex])
+
     // Kullanıcının cevapladığı soruları rapor sayfasında göstermek için kullanılır.
     // Bu objeye göre rapor sayfasında soruların doğru yanlış cevaplarını gösteriyoruz.
     useEffect(() => {
-        if (userAnswer !== -1 && currentQuestionIndex < quizInformation.questions.length) {
+        if (userAnswer !== -1) {
             const updatedQuestions = [...quizReport.questions];
             updatedQuestions[currentQuestionIndex].userAnswer = userAnswer;
             setQuizReport((prevObject) => ({
@@ -220,13 +236,7 @@ const QuizQuestions = (props) => {
                 questions: updatedQuestions,
             }));
         }
-
-    }, [userAnswer, currentQuestionIndex]);
-
-    // Her soru değiştiğinde kullanıcının verdiği cevap sıfırlanır.
-    useEffect(() => {
-        setUserAnswer(-1);
-    }, [currentQuestionIndex])
+    }, [userAnswer]);
 
     // Süre dolduğunda rapor sayfasına yönlendirilir.
     useEffect(() => {
@@ -241,13 +251,13 @@ const QuizQuestions = (props) => {
                     quizReport={quizReport}
                     quizQuestions={quizInformation.questions}
                     solveAgain={solveAgain}
-                    setSelectedQuiz = {setSelectedQuiz}
+                    setSelectedQuiz={setSelectedQuiz}
                 />
             )}
             {(currentQuestionIndex !== quizInformation.questions.length && !showQuizReport) && (
                 <>
                     <QuizTimer
-                        duration={quizInformation.duration}
+                        duration={quizDuration}
                         setIsTimerEnd={setIsTimerEnd}
                         pauseTimer={pauseTimer}
                     />
@@ -261,12 +271,12 @@ const QuizQuestions = (props) => {
                         >
                             <Close width={24} height={24} />
                         </TouchableOpacity>
-                        <Text style={styles.title}>{quizInformation.bookName}</Text>
+                        <Text style={styles.title}>{bookName}</Text>
                         <Text style={styles.quizHeaderText}>
-                            {currentQuestionIndex + 1}) {quizInformation.questions[currentQuestionIndex].question}
+                        {currentQuestionIndex + 1}) {quizInformation.questions[currentQuestionIndex].content}
                         </Text>
                         <View style={styles.answerContainer}>
-                            {quizInformation.questions[currentQuestionIndex].answers.map((answer, index) => (
+                            {quizInformation.questions[currentQuestionIndex].questionAnswers.map((answer, index) => (
                                 <AnswerButton
                                     key={index}
                                     index={index}
